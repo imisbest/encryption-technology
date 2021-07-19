@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="./aes-js/aes.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./aes-js/pad-zeropadding.js"></script>
+    <script type="text/javascript" src="./aes-js/security.js"></script>
+    <script type="text/javascript" src="./aes-js/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="./aes-js/random.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    $(function () {
+
+
+        var pUrl = "/aes";
+        // aes秘钥
+        var defaultKey = "1111wwww2222uuuu";
+        var username = "你大爷的";
+        // aes加密
+        var data = Encrypt(username, defaultKey);
+        // 创建json对象
+        $.ajax({
+            url: pUrl + "/doResponse",
+            data: {
+                username: data,
+            }
+            /* success: function(result) {
+                 var data = Decrypt(result.requestData,defaultKey);
+                 alert("返回的数据："+data);
+             }*/
+        });
+    })
+</script>
+</html>

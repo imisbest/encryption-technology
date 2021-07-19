@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="jquery-3.4.1.min.js"></script>
+<script src="jsencrypt-3.2.0.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var pUrl = "/rsa";
+        // 先获取公钥,然后提交用户名和密码给后台
+        $.ajax({
+            url: pUrl + "/getKey",
+            success: function (publicKey) {
+                var encrypt = new JSEncrypt();
+                encrypt.setPublicKey(publicKey);
+                en_username = encrypt.encrypt("你大爷的");
+                en_password = encrypt.encrypt("passwordValue");
+                // 提交用户名和密码给后台
+                $.ajax({
+                    url: pUrl + "/doResponse",
+                    data: {
+                        "username": en_username,
+                        "password": en_password,
+                        "validateCode": "validateCodeValue",
+                    }/*,
+                    success: function (msg) {
+                        if (msg.loginSuccess) {
+                            window.location.href = "/md5.html";
+                        } else {
+                            showErrorMsg(msg.loginErrorMes);
+                            _$("validateCode").value = "";
+                            reloadCode();
+                        }
+                    }*/
+                });
+            }
+        });
+    })//function结束
+</script>
+</body>
+</html>
